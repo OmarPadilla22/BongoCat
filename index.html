@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bongo Cat</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;800;1,800;900&display=swap" rel="stylesheet">
+  </head>
+  <body oncontextmenu="return false;" onselectstart="return false" >
+
+    <header>
+      <div id="keys">
+        <div>
+          <!--i18n es para traducir el texto-->
+          <span i18n="Bongos">Bongos</span>
+          <span class="key">A</span>
+          <span class="key">D</span>
+        </div>
+        <div>
+          <span i18n="Cymbal">Cymbal</span>
+          <span class="key">C</span>
+        </div>
+        <div>
+          <span i18n="Cowbell">Cowbell</span>
+          <span class="key">F</span>
+        </div>
+        <div>
+          <span i18n="Tambourine">Tambourine</span>
+          <span class="key">B</span>
+        </div>
+        <div>
+          <span i18n="Meow">Meow</span>
+          <span i18n="SPACE" class="key key-wide">SPACE</span>
+        </div>
+        <div>
+          <span i18n="Piano">Piano</span>
+          <span class="key">1</span> ...
+          <span class="key">9</span>
+          <span class="key">0</span>
+        </div>
+        <div>
+          <span i18n="Marimba">Marimba</span>
+          <span class="key">Q</span>
+          <span class="key">W</span> ...
+          <span class="key">P</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="catContainer">
+      <div class="bg-line"></div>
+  
+      <!--Cuerpo del gato-->  
+      <img class="cat__body" alt="cat_body" src="./assetts/Imagenes/gato.png" />
+      <img class="cat__mouth--meow none" alt="meow_mouth" src="./assetts/Imagenes/meow.png" />
+
+      <!--Mano izquierda arriba y abajo-->
+      <img class="cat__hand-left--up" alt="handup_left" src="./assetts/Imagenes/pata_arriba.png" />
+      <img class="cat__hand-left--down none" alt="handdown_left" src="./assetts/Imagenes/pata_abajo.png" />
+
+      <!--Mano derecha arriba y abajo-->
+      <img class="cat__hand-right--up" alt="handup_right"` src="./assetts/Imagenes/pata_arriba.png" />
+      <img class="cat__hand-right--down none" alt="handdown_right" src="./assetts/Imagenes/pata_abajo.png" />
+
+      <img class="bongo" src="./assetts/Imagenes/bongo.png" alt="Bongo">
+
+
+
+    </div>
+    
+    <script>
+      //Bandera para reproducir sonido solo una vez por pulsación
+      let isLeftFired = false;
+      let isRightFired = false;
+      let isMeowFired=false;
+       document.onmousedown = mouseDown;
+      document.onmouseup = mouseUp;
+      document.onkeydown = keyDown;
+      document.onkeyup = keyUp;
+
+      //Reconoce cuando damos click a cualquier tecla del mouse
+      function mouseDown(event) {
+        switch (event.which) {
+          case 1:
+              handDown('left');
+            playSound('leftDown');
+            isLeftFired = true;
+            break;
+          case 2:
+             handDown('left');
+            handDown('right');
+            playSound('leftDown');
+            playSound('rightDown');
+            isLeftFired = true;
+            isRightFired = true;
+            break;
+          case 3:
+            handDown('right');
+            playSound('rightDown');
+            isRightFired = true;
+            break;
+        }
+      }
+
+      //Funcion que reconoce cuando la tecla del mouse NO esta precionada
+      function mouseUp(event) {
+        switch (event.which) {
+          case 1:
+             handUp('left');
+            playSound('leftUp');
+            isLeftFired = false;
+            break;
+            case 2:
+             handDown('left');
+            handDown('right');
+            playSound('leftDown');
+            playSound('rightDown');
+            isLeftFired = false;
+            isRightFired = false;
+            break;
+          case 3:
+             handUp('right');
+            playSound('rightUp');
+            isRightFired = false;
+            break;
+        }
+      }
+      
+      //Funcion para reconocer cuando la tecla esta precionada
+      //Cada numero de evento pertenece al eventKey de la tecla correspondiente
+      function keyDown() {
+        switch (event.keyCode) {
+          case 65:
+            handUp();
+            playSound('leftUp');
+            isLeftFired = true;
+            break;
+            case 68:
+            handUp();
+            playSound('rightUp');
+            isRightFired = true;
+            break;
+          case 32:
+            doMeowMouth();
+            playSound('meow');
+            isMeowFired = true;
+            break;
+        }
+
+      //Funcion para reconocer cuando la tecla NO esta precionada
+      //Cada numero de evento pertenece al eventKey de la tecla correspondiente
+      }
+      function keyUp() {
+        switch (event.keyCode) {
+          case 65:
+            handUp();
+            playSound('leftUp');
+            isLeftFired = false;
+            break;
+          case 68:
+            handUp();
+            playSound('rightUp');
+            isRightFired = false;
+            break;
+          case 32:
+            endMeowMouth();
+            isMeowFired = false;
+            break;
+        }
+      }
+
+      //Sonido
+      function playSound(sound) {
+        let audio;
+        if (sound == 'leftDown'&&isLeftFired===false) {
+          audio = new Audio('./assetts/sonidos/bongo1.mp3');
+          audio.play();
+        }
+        if (sound == 'rightDown'&&isRightFired===false) {
+          audio = new Audio('./assetts/sonidos/bongo0.mp3');
+          audio.play();
+        }
+         if (sound == 'meow' && isMeowFired===false) {
+          audio = new Audio('./assetts/sonidos/meow.mp3');
+          audio.play();
+        }
+      }
+      
+      //Movimiento de la boca
+      function doMeowMouth(){
+        let mouth = document.getElementsByClassName(`cat__mouth--meow`)[0];
+        mouth.classList.remove('none');
+      }
+      
+      function endMeowMouth(){
+        let mouth = document.getElementsByClassName(`cat__mouth--meow`)[0];
+        mouth.className += ' none';
+      }
+
+      //Movimiento manos
+      function handDown(side) {
+        let upHand = document.getElementsByClassName(`cat__hand-${side}--up`)[0];
+        let downHand = document.getElementsByClassName(`cat__hand-${side}--down`)[0];
+        //Volver a la pocision de origen
+        upHand.className += ' none';
+        downHand.classList.remove('none');
+      }
+
+      function handUp(side) {
+        let upHand = document.getElementsByClassName(`cat__hand-${side}--up`)[0];
+        let downHand = document.getElementsByClassName(`cat__hand-${side}--down`)[0];
+        //Volver a la pocision de origen
+        downHand.className += ' none';
+        upHand.classList.remove('none');
+      }
+    </script>
+  </body>
+</html>

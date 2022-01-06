@@ -1,0 +1,121 @@
+html, body {
+  background-color: #fafafa;
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+header {
+  position: absolute;
+  text-align: center;
+  width: calc(100% - 20px);
+  padding: 10px;
+  z-index: 500
+}
+
+header a {
+  color: #000;
+  text-decoration: none
+}
+
+header span {
+  margin: 0 7px
+}
+
+#keys>div {
+  display: inline-block;
+  padding: 0 8px
+}
+
+#keys>div span {
+  display: block;
+  margin: 0 4px 8px
+}
+
+.key {
+  display: inline-block !important;
+  min-width: 30px;
+  height: 30px;
+  padding: 4px 0 0 6px;
+  background: #f5f5f5;
+  border: 4px solid #2b2b2b;
+  border-radius: 6px;
+  box-shadow: inset -6px -4px 0 0 #ccc;
+  text-align: left;
+  font-size: 15px;
+  font-family: sans-serif;
+  font-weight: 400;
+}
+
+.catContainer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 400px;
+  height: 400px;
+  margin-left: -200px;
+  margin-top: -200px;
+}
+
+.bg-line {
+  position: absolute;
+  width: 4100px;
+  height: 1000px;
+  top: -1110px;
+  left: -1000px;
+  transform: rotate(14.2deg);
+  transform-origin: top left;
+  z-index: 1;
+  border: 8px solid black;
+}
+
+/* Gato */
+.cat__body {
+  position: absolute;
+  z-index: 2;
+}
+.cat__mouth--meow {
+  position: absolute;
+  top: 150px;
+  left: 177px;
+  z-index: 4;
+}
+/* CAT - Left hand */
+.cat__hand-left--up {
+  position: absolute;
+  top: 106px;
+  left: 2px;
+  z-index: 4;
+}
+.cat__hand-left--down {
+  position: absolute;
+  top: 170px;
+  left: -14px;
+  z-index: 4;
+}
+/* CAT - Right hand */
+.cat__hand-right--up {
+  position: absolute;
+  top: 190px;
+  left: 340px;
+  z-index: 4;
+}
+.cat__hand-right--down {
+  position: absolute;
+  top: 250px;
+  left: 300px;
+  z-index: 4;
+}
+
+.bongo {
+  position: absolute;
+  width: 1200px;
+  top: 30px;
+  left: -520px;
+  z-index: 0;
+}
+
+.none {
+  display: none;
+}
